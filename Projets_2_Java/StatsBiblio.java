@@ -2,14 +2,14 @@ import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-
 public class StatsBiblio {
     public static void main(String[] args) throws FileNotFoundException {
 
         //--------------------------------------------------------------------------------------------------------------
         // Création de la liste des fichiers du répertoire BookSources avant la boucle
         ArrayList<String> listBooks = new ArrayList<String>();
-        File folder = new File("./BooksSources");
+        String nameDirectory = "src/BooksSources/";
+        File folder = new File(nameDirectory);
         String[] list = folder.list();
         for (String file : list) {
             listBooks.add(file);
@@ -78,11 +78,10 @@ public class StatsBiblio {
                     System.out.println("Le fichier " + addFile + " a été ajouté");
                     break;
                 case 3: // Option 3: Supprimer un fichier
-                    // Affichage de la liste des fichiers disponibles et sélection par numéro
-                    int maxDel = listBooks.size();
-                    for (int i = 0; i < maxDel; i++) {
-                        System.out.println(i + 1 + " - " + listBooks.get(i));
-                    }
+                    /* Affichage de la liste des fichiers disponibles et sélection par numéro
+                     * Appel de la classe DisplayList */
+                    DisplayList DListDel = new DisplayList(listBooks);
+                    System.out.println(DListDel.viewList());
                     System.out.println(repeated);
                     // Vérification si la saisie est une valeur numérique comprise entre 1 et le max affiché
                     Integer numDel;
@@ -93,18 +92,17 @@ public class StatsBiblio {
                             sc.next(); // this is important!
                         }
                         numDel = sc.nextInt(); // La valeur valeur valide est mis dans la variable numChoice
-                    } while (numDel < 1 || numDel > maxDel); // Boucle tant que la prochaine entrée n'est pas dans l'intervalle entre 1 et le max affiché
+                    } while (numDel < 1 || numDel > listBooks.size()); // Boucle tant que la prochaine entrée n'est pas dans l'intervalle entre 1 et le max affiché
                     String nameDel = listBooks.get(numDel - 1);
                     listBooks.remove(numDel - 1);
                     System.out.println("Le fichier " + nameDel + " a été supprimé");
                     sc.nextLine(); // Consomme le retour chariot de la ligne
                     break;
                 case 4: // Option 4: Afficher des informations sur un livre
-                    // Affichage de la liste des fichiers disponibles et sélection par numéro
-                    int maxDisplay = listBooks.size();
-                    for (int i = 0; i < maxDisplay; i++) {
-                        System.out.println(i + 1 + " - " + listBooks.get(i));
-                    }
+                    /* Affichage de la liste des fichiers disponibles et sélection par numéro
+                     * Appel de la classe DisplayList */
+                    DisplayList DList = new DisplayList(listBooks);
+                    System.out.println(DList.viewList());
                     System.out.println(repeated);
                     // Vérification si la saisie est une valeur numérique comprise entre 1 et le max affiché
                     Integer numDisplay;
@@ -115,7 +113,7 @@ public class StatsBiblio {
                             sc.next(); // this is important!
                         }
                         numDisplay = sc.nextInt(); // La valeur valeur valide est mis dans la variable numChoice
-                    } while (numDisplay < 1 || numDisplay > maxDisplay); // Boucle tant que la prochaine entrée n'est pas dans l'intervalle entre 1 et le max affiché
+                    } while (numDisplay < 1 || numDisplay > listBooks.size()); // Boucle tant que la prochaine entrée n'est pas dans l'intervalle entre 1 et le max affiché
 
                     String nameDisplay = listBooks.get(numDisplay - 1); // Création d'une variable pour mémoriser le nom du fichier selectionné
                     //--------------------------------------------------------------------------------------------------
@@ -134,7 +132,7 @@ public class StatsBiblio {
                     // Lecture du fichier sélectionné depuis le répertoire enfant BookSources
                     ArrayList<String> myWordList = new ArrayList<String>();
                     Scanner scFile = null;
-                    scFile = new Scanner(new File("./BooksSources/" + nameDisplay));
+                    scFile = new Scanner(new File(nameDirectory + nameDisplay));
                     while (scFile.hasNextLine()) {
                         myWordList.add(scFile.nextLine());
                     }
@@ -155,6 +153,7 @@ public class StatsBiblio {
                     //--------------------------------------------------------------------------------------------------
                     // Saisie de l'entrée de donnée (option du sous-menu)
                     int numSubChoice = sc.nextInt();
+                    System.out.println("Chargement...");
 
                     // Exécution des options du sous-menu de l'option 4
                     switch (numSubChoice) {
@@ -188,17 +187,17 @@ public class StatsBiblio {
                             sc.nextLine(); // Consomme le retour chariot de la ligne
                             break;
                         default:
-                            System.out.println("Command not recognized!");
+                            System.out.println("Command not recognized! (✖╭╮✖)");
                             sc.nextLine(); // Consomme le retour chariot de la ligne
                     }
 //                    sc.nextLine(); // Consomme le retour chariot de la ligne
                     break;
                 case 5: // Option 5: Quitter le programme
-                    System.out.print("A très bientôt :)");
+                    System.out.print("A très bientôt ╭(◉‿◉)つ");
                     System.exit(0);
                     break;
                 default:
-                    System.out.println("Command not recognized!");
+                    System.out.println("Command not recognized! (✖╭╮✖)");
                     sc.nextLine(); // Consomme le retour chariot de la ligne
             }
             //----------------------------------------------------------------------------------------------------------
